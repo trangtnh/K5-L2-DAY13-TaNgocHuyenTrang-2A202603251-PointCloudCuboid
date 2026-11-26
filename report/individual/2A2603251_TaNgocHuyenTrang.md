@@ -5,9 +5,9 @@
 - **Task CVAT**: D13-2A2603251
 - **10 frame của tôi**: s01f40, s01f59, s02f22, s02f54, s03f21, s03f40, s04f23, s04f47, s05f16, s05f45
 - **Môi trường thực hành**: macOS (Apple Silicon), trình duyệt Google Chrome, phiên bản CVAT v2.74.1 (tương thích cvat-sdk v2.83.0).
-- **MSSV bạn ngồi cạnh / đổi kiểm**: 2A202600123
+- **MSSV bạn ngồi cạnh / đổi kiểm**: 2A202603067
 
-Tổng cộng bài làm có **81 cuboid** trên 10 frame (trung bình 8.1 cuboid/frame). Frame đầu tiên `s01f40` có 10 cuboid (đáp ứng quy định tối thiểu ≥ 8), tất cả 9 frame còn lại đều có từ 5–21 cuboid (đáp ứng quy định tối thiểu ≥ 5 mỗi frame). Phân bố theo frame: s01f40=10, s01f59=6, s02f22=6, s02f54=5, s03f21=8, s03f40=5, s04f23=21, s04f47=6, s05f16=7, s05f45=7. Phiếu tự kiểm `selfcheck` ghi nhận 9/81 cuboid có cảnh báo (11.1%), chủ yếu là cảnh báo kích thước ở xe bị che khuất một phần hoặc lơ lửng do mặt đường cục bộ cao hơn trung bình. Tôi tự tin nhất về hướng xoay yaw (mũi tên đỏ chỉ đúng đầu xe dọc thân xe đạt yaw quanh 270° nếu cùng chiều hoặc 90° nếu ngược chiều) và độ cao đáy hộp (z đáy nằm sát mặt đường quanh −1.7 m); phần thách thức nhất là xác định ranh giới xe ở cự ly xa khi mật độ điểm LiDAR bị giảm, đặc biệt xe ở frame s04f23 với 21 vật thể chen chúc.
+Tổng cộng bài làm có **81 cuboid** trên 10 frame (trung bình 8.1 cuboid/frame). Frame đầu tiên `s01f40` có 10 cuboid (đáp ứng quy định tối thiểu ≥ 8), tất cả 9 frame còn lại đều có từ 5–21 cuboid (đáp ứng quy định tối thiểu ≥ 5 mỗi frame). Phân bố theo frame: s01f40=10, s01f59=6, s02f22=6, s02f54=5, s03f21=8, s03f40=5, s04f23=21, s04f47=6, s05f16=7, s05f45=7. Phiếu tự kiểm `selfcheck` ghi nhận 9/81 cuboid có cảnh báo (11.1%), chủ yếu là cảnh báo kích thước ở xe bị che khuất một phần hoặc lơ lửng do mặt đường cục bộ cao hơn trung bình. 
 
 **Cách dùng CVAT (3 dòng thao tác cốt lõi):**
 1. Đổi góc nhìn: Kéo chuột trái để xoay phối cảnh 3D, kéo chuột phải để di chuyển khung hình (Pan), lăn con lăn chuột để phóng to/thu nhỏ, xoay nhìn thẳng từ đỉnh xuống (Top-down view) để kiểm tra tổng thể và phân bổ vật thể quanh xe.
@@ -100,7 +100,7 @@ Số liệu trích xuất từ `submission/D13-2A2603251-bangA.csv` và `submiss
 **Quy luật mật độ điểm:** Khi khoảng cách tăng từ 7.8 m lên 36.0 m (tăng ~4.6 lần), số điểm giảm từ 3022 xuống 492 điểm (giảm ~6.1 lần), gần đúng với tỷ lệ $1/d^2$. Mật độ điểm LiDAR suy giảm xấp xỉ tỷ lệ nghịch với bình phương khoảng cách do góc quét của các tia phát dãn rộng ra. Kết quả này tương đồng với đường cong lý thuyết trên slide bài giảng (xe con ở 0–10 m có trung vị ~1968 điểm, 10–20 m còn ~718 điểm, 20–30 m còn ~214 điểm).
 **Tự kiểm sau sync:** Tôi đã kiểm tra và điều chỉnh 2 cuboid trên CVAT sau khi xem ảnh preview và selfcheck: (1) tại frame `s04f47` cuboid #2 (Car, dist=7.8 m) — căn chỉnh lại đáy sát mặt đường vì hộp bị lệch nhẹ lên trên; (2) tại frame `s03f40` cuboid #3 (Cyclist, dist=13.9 m) — điều chỉnh góc yaw để mũi tên đỏ chỉ đúng chiều di chuyển thay vì hướng ngược lại. Các cảnh báo kích thước còn lại (xe bị che khuất một phần ở s04f23) được giữ nguyên vì việc thu nhỏ hộp sẽ bỏ sót thể tích thực của xe.
 
-**Đổi kiểm chéo:** Đã đối chiếu số liệu mục 5 với bạn học MSSV 2A202600123. Hai con số được chọn đối chiếu là khoảng cách $\text{dist\_m} = 3.20\text{ m}$ của cuboid s01f40#1 (Car) và $z_{\text{đáy}} = -1.836\text{ m}$; cả hai con số đối chiếu khớp 100% giữa Bảng A và màn hình CVAT.
+**Đổi kiểm chéo:** Đã đối chiếu số liệu mục 5 với bạn học MSSV 2A202603067. Hai con số được chọn đối chiếu là khoảng cách $\text{dist\_m} = 3.20\text{ m}$ của cuboid s01f40#1 (Car) và $z_{\text{đáy}} = -1.836\text{ m}$; cả hai con số đối chiếu khớp 100% giữa Bảng A và màn hình CVAT.
 
 ## 6. Ý nghĩa của nhãn, cách dùng AI và điều còn chưa chắc
 **(a) Từ phía mô hình học máy (Model 3D Detection):**
