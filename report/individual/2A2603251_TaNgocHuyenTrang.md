@@ -19,8 +19,8 @@ Hai frame đọc kỹ. Ảnh: `t1-s01f40-3d.png`, `t1-s01f40-top.png`, `t1-s01f5
 
 | Frame | Phía trước xe ở cạnh nào của ảnh nhìn từ trên xuống; +x, +y chỉ về đâu | Mặt đường (phẳng/dốc; thấp hơn LiDAR ~ m) | Vật xa nhất đọc được (~ m) | Loại vật thấy | Vật phía sau / hai bên | Cụm chưa đọc được |
 |---|---|---|---|---|---|---|
-| s01f40 | Phía trước xe ở cạnh trên của ảnh nhìn từ trên xuống (-y); +x chỉ sang trái, +y chỉ xuống dưới (phía sau xe) | Mặt đường tương đối phẳng; thấp hơn cảm biến LiDAR khoảng 1.7 m (z ≈ -1.7 m) | ~48.4 m (xe con ở xa phía trước) | Car, Pedestrian, Cyclist | Phía sau xe có ô tô con ở y ≈ 12.4 m (quan sát qua cam09); bên trái có người đi bộ ở x ≈ -12.4 m (cam06) | Cụm điểm thưa ở x ≈ 11.5 m, y ≈ -32.1 m (chưa rõ là rào chắn hay đuôi xe) |
-| s01f59 | Phía trước xe ở cạnh trên của ảnh nhìn từ trên xuống (-y); +x chỉ sang trái, +y chỉ xuống dưới (phía sau xe) | Mặt đường phẳng; thấp hơn cảm biến LiDAR khoảng 1.7 m (z ≈ -1.7 m) | ~45.2 m | Car, Cyclist, Pedestrian | Phía sau có xe con ở y ≈ 6.5 m (cam09); bên phải có xe ở x ≈ 5.9 m, y ≈ -10.9 m (cam07) | Cụm điểm phía sau bên trái x ≈ -10.5 m, y ≈ 15.2 m bị khuất một phần do bóng che |
+| s01f40 | Phía trước xe ở cạnh trên của ảnh nhìn từ trên xuống (-y); +x chỉ sang trái, +y chỉ xuống dưới (phía sau xe) | Mặt đường tương đối phẳng; thấp hơn cảm biến LiDAR khoảng 1.7 m (z ≈ -1.7 m) | ~31.6 m (xe con #8 ở xa phía trước) | Car, Cyclist | Phía sau xe có ô tô con ở y ≈ 13.3 m (cam09); bên trái có xe đạp ở x ≈ -10.8 m | Cụm điểm thưa ở x ≈ 11.5 m, y ≈ -32.1 m (chưa rõ là rào chắn hay đuôi xe) |
+| s01f59 | Phía trước xe ở cạnh trên của ảnh nhìn từ trên xuống (-y); +x chỉ sang trái, +y chỉ xuống dưới (phía sau xe) | Mặt đường phẳng; thấp hơn cảm biến LiDAR khoảng 1.7 m (z ≈ -1.7 m) | ~16.2 m (xe con #6 phía trước) | Car | Phía sau có xe con ở y ≈ 6.6 m; bên phải có xe ở x ≈ 5.9 m, y ≈ -10.9 m | Cụm điểm phía sau bên trái x ≈ -10.5 m, y ≈ 15.2 m bị khuất một phần do bóng che |
 
 **3 điều CHỈ CAMERA cho biết:**
 1. Màu sơn thực tế của phương tiện (xe trắng, xe đen, taxi màu vàng) và màu sắc trang phục người đi bộ.
@@ -108,9 +108,9 @@ Số liệu trích xuất từ `submission/D13-2A2603251-bangA.csv` và `submiss
 2. Vật thể thưa điểm ở xa cần quy tắc gán nhãn nghiêm ngặt riêng (quy tắc 15–20% thể tích) bởi vì nếu gán nhãn tùy tiện khi chỉ có 1–2 điểm nhiễu, mô hình sẽ học sai đặc trưng (overfitting vào nhiễu) và dẫn tới hiện tượng "phanh ma" (phantom braking) cực kỳ nguy hiểm khi xe vận hành thực tế.
 
 **(b) Cách sử dụng công cụ hỗ trợ:**
-1. Công cụ: Sử dụng script nội bộ hỗ trợ kết xuất kiểm tra tự động (`lab.py`, `cvat_3d_cuboid.py`, thư viện `cvat-sdk`).
-2. Câu hỏi chính: Hỗ trợ kiểm tra các ràng buộc hình học (độ dài > độ rộng, đáy tiếp xúc mặt đường, góc yaw chuẩn).
-3. Sử dụng kết quả: Dùng công cụ để rà soát lỗi nhanh, phát hiện các hộp rỗng hoặc hộp bị chìm dưới đường để quay lại CVAT điều chỉnh thủ công chính xác theo mắt nhìn chuyên gia.
+1. Công cụ: ChatGPT và trợ lý Antigravity trong VS Code.
+2. Câu hỏi chính: Hỏi về cách sửa lỗi môi trường ảo Python (.venv) trên macOS, lệnh chạy CVAT Docker, và giải thích quy ước hệ tọa độ LiDAR xe VinFast (x sang trái, y về sau, z hướng lên; phía trước xe là -y).
+3. Sử dụng kết quả: Dùng hướng dẫn để cấu hình môi trường chạy script `lab.py sync` và `check_submission.py`, hiểu đúng hướng đầu xe để tự xoay vạch đỏ (+X) của cuboid trong CVAT đạt góc yaw chuẩn.
 
 **(c) Điều còn chưa chắc:**
 Ở frame `s04f23`, tại làn xe ngược chiều có một xe tải chở hàng cồng kềnh với phần bạt phủ phía sau phồng to, việc xác định ranh giới chuẩn giữa kích thước thân xe danh định và phần hàng hóa nhô ra còn phụ thuộc vào góc nhìn của camera, cần thêm ý kiến trao đổi từ Lab Coach.
